@@ -1,0 +1,4 @@
+CREATE DATABASE kokebok;
+CREATE USER 'kokebok'@'%' IDENTIFIED BY 'P455orD!';
+GRANT ALL PRIVILEGES ON kokebok.* TO 'kokebok'@'%';
+FLUSH PRIVILEGES;
