@@ -67,3 +67,20 @@ nav *:hover{
 .none{
     display: none;
 }
+
+.checkboxList{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.checkboxList *{
+    border-radius: 5px;
+    height: 40px;
+    /* width: 40px; */
+    background-color: #aaa;
+    border: solid #ffaaaa;
+}
