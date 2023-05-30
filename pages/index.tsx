@@ -131,6 +131,7 @@ export default function Home() {
       {/* Search and select part of site (left) */}
       <div className=" h-screen flex flex-col w-2/6 bg-light-background px-4 space-y-4 py-8 fixed -z-10 top-0 pt-12 overflow-y-auto scrollbar scrollbar-thumb-action scrollbar-thumb-rounded-full scrollbar-track-rounded-full border-r-2 border-highlight">
         <div className=" flex flex-col flex-1 h-1/2 mt-4 bg-medium-bacground p-4 rounded-xl">
+        <p>Velg ingredienser du har her</p>
         {/* Searchbar for searching ingredients */}
         <SearchComponent onSearch={serachIngredient} />
         {/* Felt med anbefalte ingredienser */}

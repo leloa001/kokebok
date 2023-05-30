@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import Ingredient from "@/components/Ingredient"
-import SearchComponent from "@/components/SearchComponent"
-import Minisearch from 'Minisearch'
-import ChosenIngredient from "@/components/ChosenIngredient"
+import { useEffect, useState } from "react";
+import RecipeName from "@/components/flow/RecipeName";
+import ChooseIngredients from "@/components/flow/ChooseIngredients";
+import Minisearch from 'minisearch'
+import Amount from "@/components/flow/Amount";
 
 async function getIngredients() {
   const response = await fetch('/api/getIngredients')
@@ -11,13 +11,20 @@ async function getIngredients() {
 }
 
 export default function CreateRecipe() {
+  const [recipeName, setRecipeName] = useState('');
+  const [step, setStep] = useState(1);
+
+  // list of all ingredients directly fetched from DB (should not change)
   const [ingredients, setIngredients] = useState([])
-  const [chosenIngredients, setChosenIngredients] = useState([])
-  const [filteredIngredients, setFilteredIngredients] = useState([])
-  const [searchResults, setSearchResults] = useState(ingredients)
-  const [allIsFilled, setAllIsFilled] = useState(false)
+  // list of ingredients displayed (will be updated with search, adding/removing of ingredients etc)
   const [ingredientsResult, setIngredientsResult] = useState(ingredients)
-  
+  // filtered vertion of ingredientsResult
+  const [filteredIngredients, setFilteredIngredients] = useState([])
+  // list of your chosen ingredients/ingredients you have access to
+  const [chosenIngredients, setChosenIngredients] = useState([])
+
+  // Fetching list of ingredients from database
+  // calls function "getIngredients()" listed at line 9
   const fetchIngredients = async () => {
     let fetched = await getIngredients();
     console.log(fetched)
@@ -27,19 +34,15 @@ export default function CreateRecipe() {
 
   useEffect(() => {
     fetchIngredients()
-  }, [])
+  }, []);
 
   useEffect(() => {
     setIngredientsResult(ingredients)
   }, [ingredients])
-  
-  let rettNavn = '';
-  let fremgangsmåte = '';
 
   useEffect(() => {
     const filteredIngredientResult = ingredients.filter(item => !chosenIngredients.includes(item))
     setFilteredIngredients(filteredIngredientResult)
-    updateRecipe()
   }, [ingredientsResult, chosenIngredients])
   
   let miniSearch = new Minisearch({
@@ -94,76 +97,54 @@ export default function CreateRecipe() {
     setIngredientsResult(ingredients)
     setChosenIngredients([])
   }
-  
 
-  const updateRecipe = () => {
-    // bypass for only rendering parts of the code client side
-    // used when document returns as undefined when we want to get ellement by document.***
-    if (typeof document !== 'undefined') {
-      let element = document.querySelector('.class-name')
-      // Manipulating the DOM here
-      rettNavn = document.getElementById('rettNavn').value
-      fremgangsmåte = document.getElementById('fremgangsmåte').value
-    }
-    if(rettNavn !== '' && fremgangsmåte !== '' && chosenIngredients.length > 0){
-      setAllIsFilled(true)
-    } else {
-      setAllIsFilled(false)
+  const settingNameOfRecipe = (rettNavn) => {
+    if (rettNavn !== '') {
+      setRecipeName(rettNavn);
     }
   }
 
-  
-  return (
-        <div className=" bg-light-background space-x-2 absolute top-0 -z-10 pt-12 w-full h-full flex flex-row">
-          {/* left side */}
-          <div className="w-2/3 p-4 h-full space-y-4">
-            <div className="w-full bg-medium-bacground h-fit p-3 rounded-2xl space-y-1">
-              <p>Navn på rett</p>
-              <input type="text" id="rettNavn" className="w-full rounded-md h-8 px-2" onChange={updateRecipe} />
-            </div> 
-            <div className="w-full bg-medium-bacground h-fit p-3 rounded-2xl space-y-1">
-              <p>Fremgangsmåte</p>
-              <textarea spellCheck='false' id="fremgangsmåte" className=" rounded-md w-full h-72 resize-none overflow-auto p-2" onChange={updateRecipe}></textarea>
-            </div> 
-            <input type="file" />
-          </div>
-          {/* right side */}
-          <div className="w-1/3 h-full space-y-4 p-4 pb-8 bg-standard-background flex flex-col items-center">
-            <h1 className=" text-xl">Legg til ingredienser man trenger her</h1>
-          <div className=" flex flex-col flex-1 w-full h-1/2 bg-medium-bacground p-4 rounded-xl">
-        {/* Searchbar for searching ingredients */}
-        <SearchComponent onSearch={serachIngredient} />
-        {/* Felt med anbefalte ingredienser */}
-        <div className="h-full my-4 rounded-xl p-2 bg-white flex flex-wrap content-start overflow-y-auto scrollbar scrollbar-thumb-action scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-          {
-            ingredientsResult.map(ingredient => {
-              return (
-                <Ingredient ingredientName={ingredient} key={ingredient} addIngredient={addIngredient} />
-              )
-            })
-          }
+  const getAmounts = () => {
+    chosenIngredients.map(ingrediens => {
+      document.getElementById(ingrediens+"messurment").value
+    })
+  }
+
+  const nextStep = () => {
+    setStep(step + 1);
+  }
+
+  const prevStep = () => {
+    setStep(step - 1)
+  }
+
+  if (step === 1) {
+    return (
+      <div className="h-screen pt-20 pb-10 w-screen flex items-center justify-center">
+        <div className="w-1/2 h-full rounded-3xl bg-light-background">
+          <RecipeName setRecipeName={settingNameOfRecipe} onNextStep={nextStep} recipeName={recipeName} />
         </div>
-        </div>
-        {/* felt for valgte ingredienser */}
-        <div className="flex flex-1 flex-col h-1/2 bg-medium-bacground p-4 rounded-xl w-full">
-          <div className=" flex flex-row justify-between items-center">
-            <p>Nødvendlige ingredienser</p>
-            <button className="px-4 py-2 rounded-lg border-red-500 text-red-500 hover:bg-red-500 hover:text-black" onClick={removeAllChosen}>Fjern alle</button>
-          </div>
-        <div className=" h-full my-4 rounded-xl p-2 bg-white flex flex-wrap content-start overflow-y-auto scrollbar scrollbar-thumb-action scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-          {
-            chosenIngredients.map(ingredient => {
-              return (
-                <ChosenIngredient ingredientName={ingredient} key={ingredient} removeChosen={removeChosen} />
-              )
-            })
-          }
-        </div>
-        </div>
-        {allIsFilled ? (
-          <button className="px-4 py-2 rounded-lg w-full">Opprett oppskrift</button>
-        ) : <button className="px-4 py-2 rounded-lg w-full" disabled>Opprett oppskrift</button>}
       </div>
-          </div>
+    );
+  }
+
+  if (step === 2) {
+    return (
+      <div className="h-screen pt-20 pb-10 w-screen flex items-center justify-center">
+        <div className="w-1/2 h-full rounded-3xl bg-light-background">
+          <ChooseIngredients onNextStep={nextStep} serachIngredient={serachIngredient} ingredientsResult={ingredientsResult} addIngredient={addIngredient} onPrevStep={prevStep} removeAllChosen={removeAllChosen} chosenIngredients={chosenIngredients} removeChosen={removeChosen}  />
+        </div>
+      </div>
+    );
+  }
+
+  if(step === 3) {
+    return(
+        <div className="h-screen pt-20 pb-10 w-screen flex items-center justify-center">
+        <div className="w-1/2 h-full rounded-3xl bg-light-background">
+          <Amount chosenIngredients={chosenIngredients} onNextStep={nextStep} onPrevStep={prevStep} />
+        </div>
+      </div>
     )
   }
+}

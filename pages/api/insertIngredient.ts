@@ -11,7 +11,7 @@ const pool = createPool({
 
 export default async function handler(req, res) {
   try {
-    const [rows] = await pool.promise().query('INSERT INTO ingredienser (ing)');
+    const [rows] = await pool.promise().query('INSERT INTO ');
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
