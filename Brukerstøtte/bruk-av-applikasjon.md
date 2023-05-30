@@ -6,7 +6,7 @@ formålet med denne siden er å gjøre det enklere for deg å finne ut hva du sk
 
 ---
 
-#Bli kjent med brukergrensesnittet
+# Bli kjent med brukergrensesnittet
 
 For deg som bruker finnes det to hovedsider i webapplikasjonen.
 Side nummer 1 eller hjemme siden er der hvor man søker etter oppskrifter.
