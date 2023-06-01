@@ -6,9 +6,9 @@ export default function Amount ( {chosenIngredients, onNextStep, onPrevStep, get
     const nextStep = () => {
         let counter = 0; 
         chosenIngredients.map(ingrediens => {
-            const messurment = document.getElementById(ingrediens+"messurment").value;
+            const messurment = document.getElementById(ingrediens+"messurment");
             const amount = document.getElementById(ingrediens+"amount").value;
-            if(messurment === '---' ){
+            if(messurment.value === '---' ){
                 document.getElementById('alert').innerHTML = 'Alle feltene må fylles ut før du kan gå videre'
             } else if (amount === ""){
                 document.getElementById('alert').innerHTML = 'Alle feltene må fylles ut før du kan gå videre'

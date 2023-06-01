@@ -117,7 +117,8 @@ export default function CreateRecipe() {
   const getAmounts = () => {
     const arrayOfIngredients = []
     chosenIngredients.map(ingrediens => {
-      const amountAndIngredient = {ingredient: ingrediens, messurment: document.getElementById(ingrediens+"messurment").value, amount: document.getElementById(ingrediens+"amount").value}
+      const selectElement = document.getElementById(ingrediens+"messurment")
+      const amountAndIngredient = {ingredient: ingrediens, messurment: selectElement.value, amount: document.getElementById(ingrediens+"amount").value}
       arrayOfIngredients.push(amountAndIngredient)
     })
     setIngredientsAndAmounts(arrayOfIngredients)
