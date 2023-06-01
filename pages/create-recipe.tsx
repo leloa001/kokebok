@@ -3,6 +3,9 @@ import RecipeName from "@/components/flow/RecipeName";
 import ChooseIngredients from "@/components/flow/ChooseIngredients";
 import Minisearch from 'minisearch'
 import Amount from "@/components/flow/Amount";
+import RecipeInstructions from "@/components/flow/RecipeInstruction";
+import OverviewModal from "@/components/flow/OverviewModal";
+import ImageAndTime from "@/components/flow/ImageAndTime";
 
 async function getIngredients() {
   const response = await fetch('/api/getIngredients')
@@ -12,6 +15,13 @@ async function getIngredients() {
 
 export default function CreateRecipe() {
   const [recipeName, setRecipeName] = useState('');
+  const [ingredientsAndAmounts, setIngredientsAndAmounts] = useState();
+  const [fremgangsmåte, setFremgangsmåte] = useState();
+  const [image, setImage] = useState()
+
+  const [completeRecipe, setCompleteRecipe] = useState()
+  
+  
   const [step, setStep] = useState(1);
 
   // list of all ingredients directly fetched from DB (should not change)
@@ -27,8 +37,8 @@ export default function CreateRecipe() {
   // calls function "getIngredients()" listed at line 9
   const fetchIngredients = async () => {
     let fetched = await getIngredients();
-    console.log(fetched)
     fetched = fetched.map(ingredient => ingredient.ingrediensNavn)
+    fetched.sort();
     setIngredients(fetched)
   }
 
@@ -105,9 +115,12 @@ export default function CreateRecipe() {
   }
 
   const getAmounts = () => {
+    const arrayOfIngredients = []
     chosenIngredients.map(ingrediens => {
-      document.getElementById(ingrediens+"messurment").value
+      const amountAndIngredient = {ingredient: ingrediens, messurment: document.getElementById(ingrediens+"messurment").value, amount: document.getElementById(ingrediens+"amount").value}
+      arrayOfIngredients.push(amountAndIngredient)
     })
+    setIngredientsAndAmounts(arrayOfIngredients)
   }
 
   const nextStep = () => {
@@ -116,6 +129,32 @@ export default function CreateRecipe() {
 
   const prevStep = () => {
     setStep(step - 1)
+  }
+
+  const goToOverview = (time) => {
+    const recipe = {recipeName: recipeName, ingredients: ingredientsAndAmounts, time: time, instructions: fremgangsmåte, imageBase64: image}
+    setCompleteRecipe(recipe)
+    setStep(step + 1)
+  }
+
+  const saveImage = () => {
+    const fileInput = document.getElementById('image')
+    const file = fileInput.files[0];
+
+
+    const reader = new FileReader();
+
+  reader.onload = function (event) {
+    const base64String = event.target.result;
+    // Send the base64String to your backend or store it in your database
+    setImage(base64String)
+  };
+
+  reader.readAsDataURL(file);
+  }
+
+  const saveFremgangsmåte = (fremgangsmåte) => {
+    setFremgangsmåte(fremgangsmåte);
   }
 
   if (step === 1) {
@@ -142,9 +181,34 @@ export default function CreateRecipe() {
     return(
         <div className="h-screen pt-20 pb-10 w-screen flex items-center justify-center">
         <div className="w-1/2 h-full rounded-3xl bg-light-background">
-          <Amount chosenIngredients={chosenIngredients} onNextStep={nextStep} onPrevStep={prevStep} />
+          <Amount chosenIngredients={chosenIngredients} onNextStep={nextStep} onPrevStep={prevStep} getAmounts={getAmounts} ingredientsAndAmounts={ingredientsAndAmounts} />
         </div>
       </div>
+    )
+  }
+  if(step === 4){
+    return (
+      <div className="h-screen pt-20 pb-10 w-screen flex items-center justify-center">
+        <div className="w-1/2 h-full rounded-3xl bg-light-background">
+          <RecipeInstructions onPrevStep={prevStep} saveFremgangsmåte={saveFremgangsmåte} onNextStep={nextStep} />
+        </div>
+      </div>
+    )
+  }
+
+  if(step === 5){
+    return(
+      <div className="h-screen pt-20 pb-10 w-screen flex items-center justify-center">
+        <div className="w-1/2 h-full rounded-3xl bg-light-background">
+          <ImageAndTime goToOverview={goToOverview} onPrevStep={prevStep} saveNewImage={saveImage} />
+        </div>
+      </div>
+    )
+  }
+
+  if(step === 6){
+    return(
+      <OverviewModal recipe={completeRecipe} onPrevStep={prevStep} />
     )
   }
 }

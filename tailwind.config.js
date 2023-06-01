@@ -7,10 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors:{
+      colors: {
         'light-background': '#2D2D2D',
-        'medium-bacground': '#0D0D0D',
-        'standard-background': '#4D4D4D',
+        'medium-bacground': '#1D1D1D',
+        'standard-background': '#3D3D3D',
         'action': '#F2CB05',
         'highlight': '#088C7F',
       }
@@ -21,6 +21,6 @@ module.exports = {
   ],
   variants: {
     scrollbar: ['rounded']
-}
+  }
 }
 

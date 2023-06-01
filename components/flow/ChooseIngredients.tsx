@@ -21,6 +21,7 @@ export default function ChooseIngredients ( {onNextStep, onPrevStep, serachIngre
             <h1 className=" w-16 h-16 flex items-center justify-center font-bold border-highlight border-4 rounded-full bg-medium-bacground">2</h1>
             <h1 className=" w-16 h-16 flex items-center justify-center font-bold rounded-full bg-medium-bacground">3</h1>
             <h1 className=" w-16 h-16 flex items-center justify-center font-bold rounded-full bg-medium-bacground">4</h1>
+            <h1 className=" w-16 h-16 flex items-center justify-center font-bold rounded-full bg-medium-bacground">5</h1>
         </div>
         <h1 className=" w-fit m-auto mt-10 font-semibold text-2xl">Hvilke ingredienser trengs?</h1>
         <div className=" flex flex-col h-80 p-6 rounded-xl">

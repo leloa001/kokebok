@@ -40,14 +40,13 @@ export default function Home() {
   // calls function "getIngredients()" listed at line 9
   const fetchIngredients = async () => {
     let fetched = await getIngredients();
-    console.log(fetched)
     fetched = fetched.map(ingredient => ingredient.ingrediensNavn)
+    fetched.sort();
     setIngredients(fetched)
   }
 
   const fetchRecipes = async () => {
     let fetched = await getRecipes();
-    console.log(fetched)
   }
 
   useEffect(() => {
