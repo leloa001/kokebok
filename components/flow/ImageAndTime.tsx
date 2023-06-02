@@ -4,6 +4,16 @@ export default function ImageAndTime(   {goToOverview, onPrevStep, saveNewImage}
         saveNewImage()
     }
 
+    const onGoToOverview = () => {
+        const time = document.getElementById("time").value;
+        if(document.getElementById("image").files.length !== 1){
+            document.getElementById('alert').innerHTML = 'Alle feltene må fylles ut før du kan gå videre'
+        }else if(document.getElementById("time").value === ""){
+            document.getElementById('alert').innerHTML = 'Alle feltene må fylles ut før du kan gå videre'
+        }else{
+            goToOverview(time)
+        }
+    }
         
 
     return(
@@ -17,7 +27,7 @@ export default function ImageAndTime(   {goToOverview, onPrevStep, saveNewImage}
             </div>
             <h1 className=" w-fit mx-auto mt-10 font-semibold text-2xl">Last opp ett bilde:</h1>
             <div className=" w-full flex justify-center mt-16">
-            <input type="file" accept="image/*" id="image" className=" px-8 py-4 bg-standard-background rounded-3xl" onChange={onFileInputChange} />
+            <input type="file" accept="image/*" id="image" className=" px-8 py-4 bg-standard-background rounded-3xl text-white" onChange={onFileInputChange} />
             </div>
             <h1 className=" w-fit mx-auto mt-20 font-semibold text-2xl">Hvor lang tid tar det?</h1>
             <div className=" flex w-full justify-center mt-8">
@@ -27,7 +37,7 @@ export default function ImageAndTime(   {goToOverview, onPrevStep, saveNewImage}
             <div className=" relative w-full items-end flex justify-between px-12 mt-32">
                 <button className=" px-4 py-2 rounded-full border-white text-white hover:bg-white border-2 font-semibold" onClick={onPrevStep}>Tilbake</button>
                 <label htmlFor="nextBtn" className=" absolute bottom-14 text-red-500 right-14" id="alert"></label>
-                <button className=" px-4 py-2 rounded-full border-2 font-semibold" onClick={goToOverview}>Se over</button>
+                <button className=" px-4 py-2 rounded-full border-2 font-semibold" onClick={onGoToOverview}>Se over</button>
             </div>
             </>
     )

@@ -4,6 +4,7 @@ export default function Result({oppskrift}) {
     if(oppskrift.bilde == ''){
         oppskrift.bilde = '../images/noImage.png'
     }
+    console.log(oppskrift)
     return (
         <div className=" bg-medium-bacground h-72 w-full rounded-lg p-4 my-2 pl-8 flex">
             <div className=" flex flex-col w-3/4 bg-medium-bacground justify-evenly">

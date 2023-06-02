@@ -1,4 +1,4 @@
-import next from "next/types";
+// import next from "next/types";
 import React, { useState, useEffect } from 'react';
 import Minisearch from 'minisearch'
 import SearchComponent from "@/components/SearchComponent";
@@ -33,7 +33,7 @@ export default function Home() {
 
 
   // TEMP!!
-  const [recipes, setRecipes] = useState([{rettNavn: 'Spaghetti med kjøttsaus', ingredienser: ['spaghetti', 'tomatsaus', 'kjøttdeig'], beskrivelse: 'for å lage dette må du ....', tid: 15, bilde: 'https://www.dagbladet.no/images/70860042.jpg?imageId=70860042&panow=0&panoh=0&panox=0&panoy=0&heightw=0&heighth=0&heightx=0&heighty=0&width=1200&height=630'}, {rettNavn: 'Eple', ingredienser: ['eple'], beskrivelse: 'bro... det er legit ett eple. bare spis kompis :)', tid: 0, bilde: 'https://www.shutterstock.com/image-photo/red-apple-isolated-on-white-600w-1727544364.jpg'}]);
+  const [recipes, setRecipes] = useState([]);
   
   
   // Fetching list of ingredients from database
@@ -47,12 +47,26 @@ export default function Home() {
 
   const fetchRecipes = async () => {
     let fetched = await getRecipes();
+    const arrOfRecipes = []
+    fetched.map(index => {
+      
+      console.log(index.bilde)
+
+      const oppskrift = {rettNavn: index.rettNavn, ingredienser: index.ingredienser.split(","), ingredienserMedMengde: index.ingredienserMedMengde.split(","), tid: index.tid, fremgangsmåte: index.fremgangsmåte.split(",")}
+      console.log(oppskrift)
+      arrOfRecipes.push(oppskrift)
+    })
+    setRecipes(arrOfRecipes)
   }
 
   useEffect(() => {
     fetchRecipes()
     fetchIngredients()
   }, []);
+
+  useEffect(() => {
+    console.log(recipes)
+  }, [recipes]);
 
   useEffect(() => {
     setIngredientsResult(ingredients)

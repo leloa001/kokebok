@@ -20,6 +20,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/insertIngredient.tsx", "pages/create-recipe.tsx", "pages/FAQ.tsx", "pages/index.tsx", "components/flow/ChooseIngredients.jsx", "components/flow/ImageAndTime.jsx", "components/flow/OverviewModal.jsx", "components/flow/RecipeInstruction.jsx", "components/flow/RecipeName.jsx"],
   "exclude": ["node_modules"]
 }

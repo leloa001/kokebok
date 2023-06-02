@@ -2,7 +2,8 @@ import { RxCross2 } from "react-icons/rx";
 
 export default function ChosenIngredient ( {ingredientName, removeChosen} ) {
     
-    const onRemoveChosen = () => {
+    const onRemoveChosen = (e) => {
+        console.log(e)
         removeChosen(ingredientName)
     }
 

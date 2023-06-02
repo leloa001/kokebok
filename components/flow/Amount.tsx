@@ -51,8 +51,8 @@ export default function Amount ( {chosenIngredients, onNextStep, onPrevStep, get
                               <option value="hg">hg</option>
                               <option value="kg">kg</option>
                               <option value="stk">stk</option>
-                              <option value="bokser">bokser</option>
-                              <option value="pakker">pakker</option>
+                              <option value="boks">boks</option>
+                              <option value="pakke">pakke</option>
                               <option value="klype">klype</option>
                               <option value="knivspiss">knivspiss</option>
                             </select>

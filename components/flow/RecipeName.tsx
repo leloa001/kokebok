@@ -40,7 +40,7 @@ export default function RecipeName( {setRecipeName, onNextStep, recipeName} ) {
         <h1 className=" w-fit mx-auto mt-10 font-semibold text-2xl">Hva heter retten?</h1>
         <div className=" w-5/6 m-auto mt-64">
             <p className=" ml-4">Skriv inn navnet på retten her:</p>
-            <input type="text" className=" w-full py-2 px-4 rounded-full" id="rettNavn" onChange={updateRecipeName} autoComplete="off" />
+            <input type="text" className=" w-full py-2 px-4 rounded-full" id="rettNavn" onChange={updateRecipeName} spellCheck="false" autoComplete="off" />
         </div>
         <div className=" relative mt-80 w-full items-end flex justify-end px-12">
             <label htmlFor="nextBtn" className=" absolute bottom-14 text-red-500" id="alert"></label>
