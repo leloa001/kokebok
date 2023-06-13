@@ -6,6 +6,7 @@ import Amount from "@/components/flow/Amount";
 import RecipeInstructions from "@/components/flow/RecipeInstruction";
 import OverviewModal from "@/components/flow/OverviewModal";
 import ImageAndTime from "@/components/flow/ImageAndTime";
+import axios from "axios";
 
 async function getIngredients() {
   const response = await fetch('/api/getIngredients')
@@ -15,11 +16,11 @@ async function getIngredients() {
 
 export default function CreateRecipe() {
   const [recipeName, setRecipeName] = useState('');
-  const [ingredientsAndAmounts, setIngredientsAndAmounts] = useState();
+  const [ingredientsAndAmounts, setIngredientsAndAmounts] = useState([]);
   const [fremgangsmåte, setFremgangsmåte] = useState();
-  const [image, setImage] = useState()
+  const [image, setImage] = useState({})
 
-  const [completeRecipe, setCompleteRecipe] = useState()
+  const [completeRecipe, setCompleteRecipe] = useState({})
   
   
   const [step, setStep] = useState(1);
@@ -75,7 +76,7 @@ export default function CreateRecipe() {
   // for searching in the ingredients area
   // function is called when inputfield is updated
   const serachIngredient = () => {
-    const searchInput = document.getElementById('SearchIngredient')
+    const searchInput = (document.getElementById('SearchIngredient') as HTMLInputElement | null);
     // searchresult with lots of data we dont need
     const search = miniSearch.search(searchInput.value)
     // removing all the unneccesary data from the search
@@ -117,8 +118,8 @@ export default function CreateRecipe() {
   const getAmounts = () => {
     const arrayOfIngredients = []
     chosenIngredients.map(ingrediens => {
-      const selectElement = document.getElementById(ingrediens+"messurment")
-      const amountAndIngredient = {ingredient: ingrediens, messurment: selectElement.value, amount: document.getElementById(ingrediens+"amount").value}
+      const selectElement = (document.getElementById(ingrediens+"messurment") as HTMLSelectElement | null)
+      const amountAndIngredient = {ingredient: ingrediens, messurment: selectElement?.value, amount: (document.getElementById(ingrediens+"amount") as HTMLInputElement)?.value}
       arrayOfIngredients.push(amountAndIngredient)
     })
     setIngredientsAndAmounts(arrayOfIngredients)
@@ -133,26 +134,17 @@ export default function CreateRecipe() {
   }
 
   const goToOverview = (time) => {
-    const recipe = {recipeName: recipeName, ingredients: ingredientsAndAmounts, time: time, instructions: fremgangsmåte, imageBase64: image}
+    const recipe = {recipeName: recipeName, ingredients: ingredientsAndAmounts, time: time, instructions: fremgangsmåte, bilde: image}
     setCompleteRecipe(recipe)
     setStep(step + 1)
   }
 
-  const saveImage = () => {
-    const fileInput = document.getElementById('image')
+  const saveImage = async () => {
+    const fileInput = (document.getElementById('image') as HTMLInputElement)
     const file = fileInput.files[0];
 
-
-    const reader = new FileReader();
-
-  reader.onload = function (event) {
-    const base64String = event.target.result;
-    // Send the base64String to your backend or store it in your database
-    setImage(base64String)
+    setImage(file)
   };
-
-  reader.readAsDataURL(file);
-  }
 
   const saveFremgangsmåte = (fremgangsmåte) => {
     setFremgangsmåte(fremgangsmåte);

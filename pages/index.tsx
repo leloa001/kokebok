@@ -50,9 +50,10 @@ export default function Home() {
     const arrOfRecipes = []
     fetched.map(index => {
       
-      console.log(index.bilde)
+      const bilde = index.bilde
+      console.log(bilde)
 
-      const oppskrift = {rettNavn: index.rettNavn, ingredienser: index.ingredienser.split(","), ingredienserMedMengde: index.ingredienserMedMengde.split(","), tid: index.tid, fremgangsmåte: index.fremgangsmåte.split(",")}
+      const oppskrift = {rettNavn: index.rettNavn, ingredienser: index.ingredienser.split(","), ingredienserMedMengde: index.ingredienserMedMengde.split(","), tid: index.tid,bilde: bilde,fremgangsmåte: index.fremgangsmåte.split(",")}
       console.log(oppskrift)
       arrOfRecipes.push(oppskrift)
     })
@@ -98,7 +99,7 @@ export default function Home() {
   // for searching in the ingredients area
   // function is called when inputfield is updated
   const serachIngredient = () => {
-    const searchInput = document.getElementById('SearchIngredient')
+    const searchInput = (document.getElementById('SearchIngredient') as HTMLInputElement)
     // searchresult with lots of data we dont need
     const search = miniSearch.search(searchInput.value)
     // removing all the unneccesary data from the search

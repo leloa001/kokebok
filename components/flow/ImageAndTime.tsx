@@ -5,10 +5,10 @@ export default function ImageAndTime(   {goToOverview, onPrevStep, saveNewImage}
     }
 
     const onGoToOverview = () => {
-        const time = document.getElementById("time").value;
-        if(document.getElementById("image").files.length !== 1){
+        const time = (document.getElementById("time") as HTMLInputElement).value;
+        if((document.getElementById("image") as HTMLInputElement).files.length !== 1){
             document.getElementById('alert').innerHTML = 'Alle feltene må fylles ut før du kan gå videre'
-        }else if(document.getElementById("time").value === ""){
+        }else if(time === ""){
             document.getElementById('alert').innerHTML = 'Alle feltene må fylles ut før du kan gå videre'
         }else{
             goToOverview(time)

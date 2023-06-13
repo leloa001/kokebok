@@ -6,8 +6,8 @@ export default function Amount ( {chosenIngredients, onNextStep, onPrevStep, get
     const nextStep = () => {
         let counter = 0; 
         chosenIngredients.map(ingrediens => {
-            const messurment = document.getElementById(ingrediens+"messurment");
-            const amount = document.getElementById(ingrediens+"amount").value;
+            const messurment = (document.getElementById(ingrediens+"messurment") as HTMLSelectElement);
+            const amount = (document.getElementById(ingrediens+"amount") as HTMLInputElement).value;
             if(messurment.value === '---' ){
                 document.getElementById('alert').innerHTML = 'Alle feltene må fylles ut før du kan gå videre'
             } else if (amount === ""){
@@ -41,7 +41,7 @@ export default function Amount ( {chosenIngredients, onNextStep, onPrevStep, get
                         <div className=" flex w-full items-center h-fit justify-center my-4" key={ingredient}>
                             <input type="number" id={ingredient+"amount"} className=" rounded-xl text-black text-center py-1 font-semibold" />
                             <select name="messurment" id={ingredient+"messurment"} className=" rounded-lg text-black text-center py-1 font-semibold">
-                            <option disabled selected defaultValue>---</option>
+                            <option disabled selected>---</option>
                               <option value="ts">ts</option>
                               <option value="ss">ss</option>
                               <option value="ml">ml</option>
@@ -51,10 +51,10 @@ export default function Amount ( {chosenIngredients, onNextStep, onPrevStep, get
                               <option value="hg">hg</option>
                               <option value="kg">kg</option>
                               <option value="stk">stk</option>
-                              <option value="boks">boks</option>
-                              <option value="pakke">pakke</option>
-                              <option value="klype">klype</option>
-                              <option value="knivspiss">knivspiss</option>
+                              <option value="boks">bokser</option>
+                              <option value="pakke">pakker</option>
+                              <option value="klype">klyper</option>
+                              <option value="knivspiss">knivspisser</option>
                             </select>
                             <h1 className=" ml-4 w-40 h-fit text-center py-1 rounded-xl bg-white text-black font-semibold">{ingredient}</h1>
                         </div>

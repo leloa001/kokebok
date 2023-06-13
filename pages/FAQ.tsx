@@ -8,7 +8,7 @@ export default function FAQ () {
 return(
     <div className=" h-full w-full mt-12 p-4 justify-evenly items-center flex flex-wrap space-x-4 space-y-4" >
     {faq.map(item => {
-        return(<FaqComponent faqHeader={item.header} faqContent={item.content} />)
+        return(<FaqComponent faqHeader={item.header} key={item.header} faqContent={item.content} />)
     })}
     </div>
 )

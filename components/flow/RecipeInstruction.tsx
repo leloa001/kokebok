@@ -12,7 +12,7 @@ export default function RecipeInstructions ( {onPrevStep, saveFremgangsmåte, on
         const fremgangsmåte = []
         stepsInRecipe.map(step => {
             var numToSting = step.toString();
-            const stepText = document.getElementById("step"+numToSting).value
+            const stepText = (document.getElementById("step"+numToSting) as HTMLInputElement).value
             if(stepText !== ""){
                 counter++
                 fremgangsmåte.push({step: step, text: stepText})

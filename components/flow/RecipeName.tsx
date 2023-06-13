@@ -4,13 +4,13 @@ export default function RecipeName( {setRecipeName, onNextStep, recipeName} ) {
     const [rettNavn, setRettNavn] = useState("")
 
     useEffect(() => {
-        document.getElementById("rettNavn").value = recipeName
+        (document.getElementById("rettNavn") as HTMLInputElement).value = recipeName
         updateRecipeName()
     }, [])
 
 
     const updateRecipeName = () => {
-        setRettNavn(document.getElementById("rettNavn").value)
+        setRettNavn((document.getElementById("rettNavn") as HTMLInputElement).value)
         setRecipeName(rettNavn)
     }
 

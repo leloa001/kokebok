@@ -1,5 +1,5 @@
 import Ingredient from "@/components/Ingredient";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
 
   async function getIngredients() {
@@ -9,7 +9,7 @@ import axios from 'axios';
 }
 
 
-export default function insertIngredient() {
+export default function InsertIngredient() {
 
     let itemsArray;
 
@@ -20,10 +20,11 @@ export default function insertIngredient() {
         } catch (error) {
           console.error(error);
         }
-        fetchIngredients()
-        document.getElementById('ingredientName').value = ""
+        fetchIngredients();
+        (document.getElementById('ingredientName') as HTMLInputElement).value = ""
     }
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [ingrediens, setIngredients] = useState([])
 
     const fetchIngredients = async () => {
@@ -34,15 +35,19 @@ export default function insertIngredient() {
     }
 
     const insertIngredient = () => {
-        const inputField = document.getElementById('ingredientName').value
+        const inputField = (document.getElementById('ingredientName') as HTMLInputElement).value
         itemsArray = inputField.split(", ");
         if(itemsArray.length !== 0){
             insertData()
         }
         
     }
+
+    useEffect(() => {
+
+    }, [])
     
-    useState(() => {
+    useEffect(() => {
         fetchIngredients()
     }, [])
 
@@ -56,7 +61,7 @@ export default function insertIngredient() {
                     {
                     ingrediens.map(ingredient => {
                         return (
-                        <p className=" px-4 py-2 bg-highlight rounded-2xl m-1">{ingredient}</p>
+                        <p className=" px-4 py-2 bg-highlight rounded-2xl m-1" key={ingredient}>{ingredient}</p>
                         )
                     })
                     }

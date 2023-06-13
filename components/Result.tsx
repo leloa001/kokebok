@@ -20,7 +20,7 @@ export default function Result({oppskrift}) {
                 </div>
             </div>
             <div className={`bg-slate-200 w-fit rounded-lg items-end justify-center flex flex-col overflow-hidden`}>
-                <img src={oppskrift.bilde} alt="bilde av matretten" className="rounded-lg w-fit" />
+                <img src={"/uploads/" + oppskrift.bilde} alt="bilde av matretten" className="rounded-lg" />
             </div>
         </div>
     )
