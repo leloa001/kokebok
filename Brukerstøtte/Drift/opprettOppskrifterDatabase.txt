@@ -1,8 +1,0 @@
-CREATE TABLE oppskrifter(
-    rettNavn VARCHAR(255),
-    ingredienser VARCHAR(255), 
-    ingredienserMedMengde VARCHAR(255), 
-    tid INT, 
-    bilde BLOB, 
-    fremgangsmåte VARCHAR(255)
-    )

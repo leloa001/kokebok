@@ -1,4 +1,0 @@
-CREATE TABLE oppskrifter (
-    navn varchar(255),
-    ingredienser varchar(255)
-);
