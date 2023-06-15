@@ -33,3 +33,6 @@ steg 5: Velge ett passende bilde for oppskriften og skrive omtrent hvor lang tid
 Den siste siden du som bruker har tilgjengelig FAQ siden
 Her vil det dukke opp spørsmål som ofte stilles og litt generel info om siden
 du vil også ha muligheten til å sende inn spørsmål på denne siden.
+
+
+ny endring
